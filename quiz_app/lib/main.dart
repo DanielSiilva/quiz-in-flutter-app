@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 
 main() => runApp(PerguntaApp());
 
+//StatelessWidget: Componente sem estado
 class PerguntaApp extends StatelessWidget {
+  var perguntaSelecinada = 1;
   void responder() {
-    print('Pergunta respondida');
+    perguntaSelecinada++;
+    print(perguntaSelecinada);
   }
 
   @override
@@ -20,19 +23,19 @@ class PerguntaApp extends StatelessWidget {
         ),
         body: Column(
           children: <Widget>[
-            Text(perguntas[0]),
+            Text(perguntas[perguntaSelecinada]),
             ElevatedButton(
               child: Text('Botao 01'),
               onPressed: responder,
             ),
             ElevatedButton(
               child: Text('Botao 02'),
-              onPressed: () {
-                print('Resposta 02');
-              },
+              onPressed: responder,
             ),
             ElevatedButton(
-                child: Text('Botao 03'), onPressed: () => print('Funcao 03'))
+              child: Text('Botao 03'),
+              onPressed: responder,
+            )
           ],
         ),
       ),
