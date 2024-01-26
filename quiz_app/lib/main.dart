@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 main() => runApp(PerguntaApp());
 
 //StatelessWidget: Componente sem estado
-class PerguntaApp extends StatelessWidget {
-  var perguntaSelecinada = 1;
+
+class PerguntaAppState extends State<PerguntaApp> {
+  var perguntaSelecinada = 0;
   void responder() {
-    perguntaSelecinada++;
+    setState(() {
+      perguntaSelecinada++;
+    });
     print(perguntaSelecinada);
   }
 
@@ -40,5 +43,11 @@ class PerguntaApp extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class PerguntaApp extends StatefulWidget {
+  PerguntaAppState createState() {
+    return PerguntaAppState();
   }
 }
