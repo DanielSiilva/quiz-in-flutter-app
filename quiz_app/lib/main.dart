@@ -2,52 +2,54 @@ import 'package:flutter/material.dart';
 import './questao.dart';
 import './resposta.dart';
 
-main() => runApp(PerguntaApp());
+void main() => runApp(PerguntaApp());
 
-//StatelessWidget: Componente sem estado
+class PerguntaApp extends StatefulWidget {
+  @override
+  _PerguntaAppState createState() {
+    return _PerguntaAppState();
+  }
+}
 
 class _PerguntaAppState extends State<PerguntaApp> {
   var perguntaSelecinada = 0;
+
   void _responder() {
     setState(() {
       perguntaSelecinada++;
     });
-    print(perguntaSelecinada);
   }
 
-  @override
-  //Posso trabalhar com inferencia tambem, retirando os campos onde esta sendo tipado, nao havera problemas
-  final perguntas = [
+  final perguntas = const [
     {
       'texto': 'Qual a sua cor favorita?',
-      'respostas': [
-        'Preto',
-        'Azul',
-        'Verde',
-        'Amarelo',
-      ]
+      'respostas': ['Preto', 'Azul', 'Verde', 'Amarelo'],
     },
     {
-      'texto': 'Qual a sua linguagem de programacao favorita?',
-      'respostas': [
-        'Js',
-        'Dart',
-        'Nodejs',
-        'React',
-      ]
+      'texto': 'Qual a sua linguagem de programação favorita?',
+      'respostas': ['Js', 'Dart', 'Nodejs', 'React'],
     },
     {
       'texto': 'React Native ou Flutter?',
-      'respostas': [
-        'Js',
-        'Dart',
-        'Nodejs',
-        'React',
-      ]
-    }
+      'respostas': ['Js', 'Dart', 'Nodejs', 'React'],
+    },
   ];
 
+  List<Widget> _construirRespostas() {
+    List<Widget> respostas = [];
+    for (String textoResp
+        in perguntas[perguntaSelecinada].cast()['respostas']) {
+      respostas.add(Resposta(textoResp, _responder));
+    }
+    return respostas;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // Aqui estamos verificando se a pergunta selecionada é válida antes de construir as respostas.
+    List<Widget> respostas =
+        perguntaSelecinada < perguntas.length ? _construirRespostas() : [];
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -55,19 +57,11 @@ class _PerguntaAppState extends State<PerguntaApp> {
         ),
         body: Column(
           children: <Widget>[
-            Questao(perguntas[perguntaSelecinada]['texto'] as String),
-            Resposta('Resposta 01', _responder),
-            Resposta('Resposta 02', _responder),
-            Resposta('Resposta 03', _responder),
+            Questao(perguntas[perguntaSelecinada]['texto'].toString()),
+            ...respostas,
           ],
         ),
       ),
     );
-  }
-}
-
-class PerguntaApp extends StatefulWidget {
-  _PerguntaAppState createState() {
-    return _PerguntaAppState();
   }
 }
