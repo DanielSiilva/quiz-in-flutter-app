@@ -13,14 +13,7 @@ class PerguntaApp extends StatefulWidget {
 
 class _PerguntaAppState extends State<PerguntaApp> {
   var perguntaSelecinada = 0;
-
-  void _responder() {
-    setState(() {
-      perguntaSelecinada++;
-    });
-  }
-
-  final perguntas = const [
+  final _perguntas = const [
     {
       'texto': 'Qual a sua cor favorita?',
       'respostas': ['Preto', 'Azul', 'Verde', 'Amarelo'],
@@ -35,29 +28,44 @@ class _PerguntaAppState extends State<PerguntaApp> {
     },
   ];
 
+  void _responder() {
+    if (temPerguntaSelecionada) {
+      setState(() {
+        perguntaSelecinada++;
+      });
+    }
+  }
+
   List<String> _construirRespostas() {
-    List<String> respostas = perguntas[perguntaSelecinada].cast()['respostas'];
+    List<String> respostas = _perguntas[perguntaSelecinada].cast()['respostas'];
 
     return respostas;
+  }
+
+  bool get temPerguntaSelecionada {
+    return perguntaSelecinada < _perguntas.length;
   }
 
   @override
   Widget build(BuildContext context) {
     // Aqui estamos verificando se a pergunta selecionada é válida antes de construir as respostas.
-    List<String> respostas =
-        perguntaSelecinada < perguntas.length ? _construirRespostas() : [];
+    List<String> respostas = temPerguntaSelecionada
+        ? _perguntas[perguntaSelecinada].cast()['respostas']
+        : [];
 
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('Perguntas'),
         ),
-        body: Column(
-          children: <Widget>[
-            Questao(perguntas[perguntaSelecinada]['texto'].toString()),
-            ...respostas.map((t) => Resposta(t, _responder)).toList()
-          ],
-        ),
+        body: temPerguntaSelecionada
+            ? Column(
+                children: <Widget>[
+                  Questao(_perguntas[perguntaSelecinada]['texto'].toString()),
+                  ...respostas.map((t) => Resposta(t, _responder)).toList()
+                ],
+              )
+            : null,
       ),
     );
   }
