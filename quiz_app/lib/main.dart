@@ -35,19 +35,16 @@ class _PerguntaAppState extends State<PerguntaApp> {
     },
   ];
 
-  List<Widget> _construirRespostas() {
-    List<Widget> respostas = [];
-    for (String textoResp
-        in perguntas[perguntaSelecinada].cast()['respostas']) {
-      respostas.add(Resposta(textoResp, _responder));
-    }
+  List<String> _construirRespostas() {
+    List<String> respostas = perguntas[perguntaSelecinada].cast()['respostas'];
+
     return respostas;
   }
 
   @override
   Widget build(BuildContext context) {
     // Aqui estamos verificando se a pergunta selecionada é válida antes de construir as respostas.
-    List<Widget> respostas =
+    List<String> respostas =
         perguntaSelecinada < perguntas.length ? _construirRespostas() : [];
 
     return MaterialApp(
@@ -58,7 +55,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
         body: Column(
           children: <Widget>[
             Questao(perguntas[perguntaSelecinada]['texto'].toString()),
-            ...respostas,
+            ...respostas.map((t) => Resposta(t, _responder)).toList()
           ],
         ),
       ),
