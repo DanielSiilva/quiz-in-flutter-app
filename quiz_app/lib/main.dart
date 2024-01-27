@@ -16,10 +16,37 @@ class _PerguntaAppState extends State<PerguntaApp> {
   }
 
   @override
-  final List<String> perguntas = [
-    'Qual a sua cor favorita?',
-    'Qual a sua linguagem de programacao favorita?'
+  //Posso trabalhar com inferencia tambem, retirando os campos onde esta sendo tipado, nao havera problemas
+  final perguntas = [
+    {
+      'texto': 'Qual a sua cor favorita?',
+      'respostas': [
+        'Preto',
+        'Azul',
+        'Verde',
+        'Amarelo',
+      ]
+    },
+    {
+      'texto': 'Qual a sua linguagem de programacao favorita?',
+      'respostas': [
+        'Js',
+        'Dart',
+        'Nodejs',
+        'React',
+      ]
+    },
+    {
+      'texto': 'React Native ou Flutter?',
+      'respostas': [
+        'Js',
+        'Dart',
+        'Nodejs',
+        'React',
+      ]
+    }
   ];
+
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
@@ -28,7 +55,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
         ),
         body: Column(
           children: <Widget>[
-            Questao(perguntas[perguntaSelecinada]),
+            Questao(perguntas[perguntaSelecinada]['texto'] as String),
             Resposta('Resposta 01', _responder),
             Resposta('Resposta 02', _responder),
             Resposta('Resposta 03', _responder),
