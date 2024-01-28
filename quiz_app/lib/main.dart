@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import './questao.dart';
-import './resposta.dart';
+import './questionario.dart';
 import './resultado.dart';
 
 void main() => runApp(PerguntaApp());
@@ -37,34 +36,28 @@ class _PerguntaAppState extends State<PerguntaApp> {
     }
   }
 
+  bool get temPerguntaSelecionada {
+    return perguntaSelecinada < _perguntas.length;
+  }
+
   List<String> _construirRespostas() {
     List<String> respostas = _perguntas[perguntaSelecinada].cast()['respostas'];
 
     return respostas;
   }
 
-  bool get temPerguntaSelecionada {
-    return perguntaSelecinada < _perguntas.length;
-  }
-
   @override
   Widget build(BuildContext context) {
-    // Aqui estamos verificando se a pergunta selecionada é válida antes de construir as respostas.
-    List<String> respostas = temPerguntaSelecionada
-        ? _perguntas[perguntaSelecinada].cast()['respostas']
-        : [];
-
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
             title: Text('Perguntas'),
           ),
           body: temPerguntaSelecionada
-              ? Column(
-                  children: <Widget>[
-                    Questao(_perguntas[perguntaSelecinada]['texto'].toString()),
-                    ...respostas.map((t) => Resposta(t, _responder)).toList()
-                  ],
+              ? Questionario(
+                  perguntas: _perguntas,
+                  perguntaSelecionadas: perguntaSelecinada,
+                  responder: _responder,
                 )
               : Resultado()),
     );
