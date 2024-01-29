@@ -67,7 +67,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
                   perguntaSelecionadas: perguntaSelecinada,
                   responder: _responder,
                 )
-              : Resultado()),
+              : Resultado(_pontuacaoTotal)),
     );
   }
 }
