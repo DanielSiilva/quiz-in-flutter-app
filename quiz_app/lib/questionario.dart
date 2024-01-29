@@ -19,14 +19,17 @@ class Questionario extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Aqui estamos verificando se a pergunta selecionada é válida antes de construir as respostas.
-    List<String> respostas = temPerguntaSelecionada
-        ? perguntas[perguntaSelecionadas].cast()['respostas']
+    List<Map<String, Object>> respostas = temPerguntaSelecionada
+        ? perguntas[perguntaSelecionadas]['respostas']
+                as List<Map<String, Object>>? ??
+            []
         : [];
     return Column(
       children: <Widget>[
         Questao(perguntas[perguntaSelecionadas]['texto'].toString()),
-        ...respostas.map((t) => Resposta(t, responder)).toList()
+        ...respostas
+            .map((resp) => Resposta(resp['texto'] as String? ?? '', responder))
+            .toList(),
       ],
     );
   }
