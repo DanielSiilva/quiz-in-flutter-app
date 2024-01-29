@@ -9,7 +9,7 @@ class Resposta extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 20),
       child: ElevatedButton(
         child: Text(
           texto,
@@ -25,7 +25,7 @@ class Resposta extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
         ),
       ),
     );
