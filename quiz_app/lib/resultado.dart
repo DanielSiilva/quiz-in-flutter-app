@@ -6,12 +6,15 @@ class Resultado extends StatelessWidget {
   Resultado(this.pontuacao);
 
   String get frasePontuacao {
-    if (pontuacao < 8) {
-      return 'Parabens';
-    } else if (pontuacao < 12) {
-      return 'Voce é bom!';
-    } else {
-      return 'Tu é brado! ';
+    switch (pontuacao) {
+      case < 9:
+        return ('Tu é mais ou menos');
+      case >= 12:
+        return ('Tu e bom!');
+      case >= 19:
+        return ('Brabo demais.');
+      default:
+        return ('Bradinho');
     }
   }
 
